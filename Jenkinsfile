@@ -10,14 +10,17 @@ pipeline {
     stage('SonarCloud') {
           environment {
             SONAR_RUNNER_HOME = tool 'SonarQube Scanner'
-            PROJECT_NAME = "jenkins"
+            PROJECT_NAME = "sample"
           }
           steps {
             withSonarQubeEnv('SonarCloudOne') {
-                sh '''$SONAR_RUNNER_HOME/opt/sonar-scanner \
-                -Dsonar.java.binaries=build/classes/java/ \
-                -Dsonar.projectKey=$PROJECT_NAME \
-                -Dsonar.sources=.'''
+                sh '''cd /var/lib/jenkins/workspace/java-maven-project/java-maven-app-master \
+                mvn clean verify sonar:sonar \
+               -Dsonar.projectKey=sample \
+               -Dsonar.projectName='sample' \
+               -Dsonar.host.url=http://54.227.43.162:9000 \
+               -Dsonar.token=sqp_f864753e09846383d7dffce1302d4376944d454d
+              '''
              }
           }
        }
