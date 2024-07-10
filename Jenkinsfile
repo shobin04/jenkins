@@ -14,7 +14,7 @@ pipeline {
           }
           steps {
             withSonarQubeEnv('SonarQube') {
-                sh '''cd /var/lib/jenkins/workspace/java-maven-project/java-maven-app-master \
+                sh '''cd /var/lib/jenkins/workspace/java-maven-project/java-maven-app-master
                 mvn clean verify sonar:sonar \
                -Dsonar.projectKey=sample \
                -Dsonar.projectName='sample' \
