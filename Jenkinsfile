@@ -33,7 +33,7 @@ pipeline {
         }  
         stage ('deploy') {
             steps {
-                 sh"""cp /var/lib/jenkins/workspace/java-maven-project/java-maven-app-master/target/my-app-1.0-SNAPSHOT.war /opt/tomcat/webapps
+                 sh"""sudo cp /var/lib/jenkins/workspace/java-maven-project/java-maven-app-master/target/my-app-1.0-SNAPSHOT.war /opt/tomcat/webapps
                  sudo systemctl restart tomcat
                  """
             }
