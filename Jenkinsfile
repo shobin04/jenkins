@@ -14,18 +14,18 @@ pipeline {
                """
             }
         }  
-       stage('SonarQube Analysis') {
-          def mvn = tool 'maven';
-          withSonarQubeEnv() {
-          sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sample -Dsonar.projectName='sample'"
-          }
-        }
         stage ('deploy') {
             steps {
                  sh""" sudo cp /var/lib/jenkins/workspace/Demo-Project/java-maven-app-master/target/my-app-1.0-SNAPSHOT.war /opt/tomcat/webapps
                  sudo systemctl restart tomcat
                  """
             }
-        }    
+        }   
+        stage('SonarQube Analysis') {
+          def mvn = tool 'maven';
+          withSonarQubeEnv() {
+          sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sample -Dsonar.projectName='sample'"
+          }
+       }
     }
 }
