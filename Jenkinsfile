@@ -21,17 +21,19 @@ pipeline {
                  """
             }
         }   
-        stage('SonarQube Analysis') {
-            def mvn = tool 'maven';
-            withSonarQubeEnv() {
-           sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=jenkins -Dsonar.projectName='jenkins'"
-         }
-     }
-        stage('SonarQube Analysis') {
-            def scannerHome = tool 'SonarQube Scanner';
-            withSonarQubeEnv() {
-               sh "${scannerHome}/opt/sonar-scanner"
-           }
-        }
+        stage('SonarCloud') {
+          environment {
+            SCANNER_HOME = tool 'SonarQube Scanner'
+            PROJECT_NAME = "jenkins"
+          }
+          steps {
+            withSonarQubeEnv('SonarCloudOne') {
+                sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                -Dsonar.java.binaries=build/classes/java/ \
+                -Dsonar.projectKey=$PROJECT_NAME \
+                -Dsonar.sources=.'''
+             }
+          }
+       }
     }
 }
