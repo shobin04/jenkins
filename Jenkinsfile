@@ -7,13 +7,13 @@ pipeline {
                git 'https://github.com/shobin04/jenkins.git'
             }
         }   
-    stage('SonarCloud') {
+    stage('SonarQube') {
           environment {
             SONAR_RUNNER_HOME = tool 'SonarQube'
             PROJECT_NAME = "sample"
           }
           steps {
-            withSonarQubeEnv('SonarCloudOne') {
+            withSonarQubeEnv('SonarQube') {
                 sh '''cd /var/lib/jenkins/workspace/java-maven-project/java-maven-app-master \
                 mvn clean verify sonar:sonar \
                -Dsonar.projectKey=sample \
